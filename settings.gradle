@@ -1,0 +1,2 @@
+rootProject.name='udacity-android-basics-NewsApp'
+include ':app'
