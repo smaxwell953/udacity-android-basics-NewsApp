@@ -31,7 +31,8 @@
         android:textSize="@dimen/text_16sp"
         tools:text="Section"
         android:layout_toRightOf="@+id/title"
-        android:layout_marginLeft="@dimen/r_4dp" />
+        android:layout_marginLeft="@dimen/r_4dp"
+        android:layout_toEndOf="@+id/title" />
 
     <TextView
         android:id="@+id/date"

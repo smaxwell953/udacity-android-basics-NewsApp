@@ -52,10 +52,9 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Health Article}s
-        List<Health> healtharticles = extractFeatureFromJson(jsonResponse);
 
         // Return the list of {@link Health Article}s
-        return healtharticles;
+        return extractFeatureFromJson(jsonResponse);
     }
 
     /**
@@ -154,7 +153,7 @@ public final class QueryUtils {
 
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or health articles).
-            JSONArray healthArray = baseJsonResponse.getJSONArray("features");
+            JSONArray healthArray = baseJsonResponse.getJSONArray("response");
 
             // For each health article in the healthArray, create an {@link Health} object
             for (int i = 0; i < healthArray.length(); i++) {
@@ -165,23 +164,23 @@ public final class QueryUtils {
                 // For a given health article, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that health article.
-                JSONObject properties = currentHealth.getJSONObject("properties");
+                JSONObject properties = currentHealth.getJSONObject("id");
 
-                // Extract the value for the key called "mag"
-                String title = properties.getString("title");
+                // Extract the value for the key called "type"
+                String type = properties.getString("type");
 
-                // Extract the value for the key called "place"
-                String author = properties.getString("author");
+                // Extract the value for the key called "webTitle"
+                String webTitle = properties.getString("webTitle");
 
-                // Extract the value for the key called "time"
-                String date = properties.getString("date");
+                // Extract the value for the key called "webPublicationDate"
+                String webPublicationDate = properties.getString("webPublicationDate");
 
-                // Extract the value for the key called "url"
-                String url = properties.getString("url");
+                // Extract the value for the key called "webUrl"
+                String webUrl = properties.getString("webUrl");
 
-                // Create a new {@link Health} object with the title, author, date,
+                // Create a new {@link Health} object with the type, title, date,
                 // and url from the JSON response.
-                Health healthnews = new Health(title, author, date, url);
+                Health healthnews = new Health(type, webTitle, webPublicationDate, webUrl);
 
                 // Add the new {@link Health} to the list of health articles.
                 healtharticles.add(healthnews);

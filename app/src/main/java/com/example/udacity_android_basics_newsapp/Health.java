@@ -2,60 +2,60 @@ package com.example.udacity_android_basics_newsapp;
 
 public class Health  {
 
-    /** Title of the article */
-    private String title;
+    /** Type of the article */
+    private String type;
 
-    /** Author of the article */
-    private String author;
+    /** Title of the article */
+    private String webTitle;
 
     /** Date of the article */
-    private String date;
+    private String webPublicationDate;
 
     /** URL of the article */
-    private String url;
+    private String webUrl;
 
-    public Health(String title, String author, String date, String url) {
-        this.title = title;
-        this.author = author;
-        this.date = date;
-        this.url = url;
+    public Health(String type, String webTitle, String webPublicationDate, String webUrl) {
+        this.type = type;
+        this.webTitle = webTitle;
+        this.webPublicationDate = webPublicationDate;
+        this.webUrl = webUrl;
+    }
+
+    /**
+     * Returns the type of the article.
+     */
+    public String getType() {
+        return type;
     }
 
     /**
      * Returns the title of the article.
      */
     public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Returns the author of the article.
-     */
-    public String getAuthor() {
-        return author;
+        return webTitle;
     }
 
     /**
      * Returns the date of the article.
      */
     public String getDate() {
-        return date;
+        return webPublicationDate;
     }
 
     /**
      * Returns the website URL to find more information about the article.
      */
     public String getUrl() {
-        return url;
+        return webUrl;
     }
 
     @Override
     public String toString() {
         return "News{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", date='" + date + '\'' +
-                ", url='" + url + '\'' +
+                "type='" + type + '\'' +
+                ", title='" + webTitle + '\'' +
+                ", date='" + webPublicationDate + '\'' +
+                ", url='" + webUrl + '\'' +
                 '}';
     }
 }

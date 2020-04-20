@@ -1,5 +1,6 @@
 package com.example.udacity_android_basics_newsapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.LoaderManager;
@@ -10,8 +11,10 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +38,16 @@ public class HealthActivity extends AppCompatActivity
 
     private static final String LOG_TAG = HealthActivity.class.getName();
 
+    private static final int READ_TIME_OUT = 10000; // milliseconds
+    private static final int CONNECT_TIME_OUT = 15000; // milliseconds
+    private static final int RESPONSE_CODE_SUCCESS = 200;
+
+    // API KEY that I have to register to get access to the guardian API but must keep private
+    private static final String API_KEY = "PRIVATE";
+
     /** URL for health article data from the Guardian dataset */
     private static final String GUARDIAN_REQUEST_URL =
-            "http://content.guardianapis.com/search?q=health&api-key=test";
+            "https://content.guardianapis.com/search?q=health&api-key="+API_KEY;
 
     /**
      * Constant value for the health loader ID. We can choose any integer.
@@ -198,5 +215,65 @@ public class HealthActivity extends AppCompatActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Make an HTTP request to the given URL and return a String as the response.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private static String makeHttpRequest(URL url) throws IOException {
+        String jsonResponse = "";
+
+        // If the URL is null, then return early.
+        if (url == null) {
+            return jsonResponse;
+        }
+
+        HttpURLConnection urlConnection = null;
+        InputStream inputStream = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(READ_TIME_OUT /* milliseconds */);
+            urlConnection.setConnectTimeout(CONNECT_TIME_OUT /* milliseconds */);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // If the request was successful (response code 200),
+            // then read the input stream and parse the response.
+            if (urlConnection.getResponseCode() == RESPONSE_CODE_SUCCESS) {
+                inputStream = urlConnection.getInputStream();
+                jsonResponse = readFromStream(inputStream);
+            } else {
+                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem retrieving the News Article JSON results.", e);
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (inputStream != null) {
+                // Closing the input stream could throw an IOException, which is why
+                // the makeHttpRequest(URL url) method signature specifies than an IOException
+                // could be thrown.
+                inputStream.close();
+            }
+        }
+        return jsonResponse;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private static String readFromStream(InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
+            }
+        }
+        return output.toString();
     }
 }
