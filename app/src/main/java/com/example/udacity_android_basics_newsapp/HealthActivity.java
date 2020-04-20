@@ -43,7 +43,7 @@ public class HealthActivity extends AppCompatActivity
     private static final int RESPONSE_CODE_SUCCESS = 200;
 
     // API KEY that I have to register to get access to the guardian API but must keep private
-    private static final String API_KEY = "PRIVATE";
+    private static final String API_KEY = "test";
 
     /** URL for health article data from the Guardian dataset */
     private static final String GUARDIAN_REQUEST_URL =
