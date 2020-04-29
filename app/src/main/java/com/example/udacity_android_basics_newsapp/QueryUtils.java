@@ -151,9 +151,11 @@ public final class QueryUtils {
             // Create a JSONObject from the JSON response string
             JSONObject baseJsonResponse = new JSONObject(healthJSON);
 
+            JSONObject responseObject = baseJsonResponse.getJSONObject("response");
+
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or health articles).
-            JSONArray healthArray = baseJsonResponse.getJSONArray("response");
+            JSONArray healthArray = responseObject.getJSONArray("results");
 
             // For each health article in the healthArray, create an {@link Health} object
             for (int i = 0; i < healthArray.length(); i++) {
