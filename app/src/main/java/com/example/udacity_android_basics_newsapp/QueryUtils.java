@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,22 +162,17 @@ public final class QueryUtils {
                 // Get a single healtharticle at position i within the list of health articles
                 JSONObject currentHealth = healthArray.getJSONObject(i);
 
-                // For a given health article, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that health article.
-                JSONObject properties = currentHealth.getJSONObject("id");
-
                 // Extract the value for the key called "type"
-                String type = properties.getString("type");
+                String type = currentHealth.getString("type");
 
                 // Extract the value for the key called "webTitle"
-                String webTitle = properties.getString("webTitle");
+                String webTitle = currentHealth.getString("webTitle");
 
                 // Extract the value for the key called "webPublicationDate"
-                String webPublicationDate = properties.getString("webPublicationDate");
+                String webPublicationDate = currentHealth.getString("webPublicationDate");
 
                 // Extract the value for the key called "webUrl"
-                String webUrl = properties.getString("webUrl");
+                String webUrl = currentHealth.getString("webUrl");
 
                 // Create a new {@link Health} object with the type, title, date,
                 // and url from the JSON response.
