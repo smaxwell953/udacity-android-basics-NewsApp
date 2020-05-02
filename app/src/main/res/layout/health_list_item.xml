@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,15 +8,25 @@
     android:padding="16dp" >
 
     <TextView
+        android:id="@+id/sectionName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        tools:text="sectionName" />
+
+    <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/time"
         android:maxLines="2"
         android:ellipsize="end"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         android:textColor="@color/colorAccent"
         tools:text="News"
         />
@@ -25,14 +35,11 @@
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
         android:layout_marginTop="@dimen/r_4dp"
         android:layout_marginStart="@dimen/r_4dp"
         android:textSize="@dimen/text_16sp"
-        tools:text="Section"
-        android:layout_toRightOf="@+id/title"
-        android:layout_marginLeft="@dimen/r_4dp"
-        android:layout_toEndOf="@+id/title" />
+        tools:text="Author"
+        android:layout_marginLeft="@dimen/r_4dp" />
 
     <TextView
         android:id="@+id/date"
@@ -47,11 +54,10 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="12sp"
         tools:text="02:21"
         />
 
 
-</RelativeLayout>
+</LinearLayout>

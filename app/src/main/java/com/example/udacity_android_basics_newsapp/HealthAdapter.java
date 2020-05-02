@@ -32,11 +32,14 @@ public class HealthAdapter extends ArrayAdapter<Health> {
 
         Health health = getItem(position);
 
+        TextView sectionName = convertView.findViewById(R.id.sectionName);
+        sectionName.setText(health.getsectionName());
+
         TextView title = convertView.findViewById(R.id.title);
         title.setText(health.getTitle());
 
-        TextView author = convertView.findViewById(R.id.author);
-        author.setText(health.getUrl());
+        TextView webAuthor = convertView.findViewById(R.id.author);
+        webAuthor.setText(health.getwebAuthor());
 
         TextView date = convertView.findViewById(R.id.date);
         date.setText(changeDateToDays(health.getDate()));

@@ -162,11 +162,24 @@ public final class QueryUtils {
                 // Get a single healtharticle at position i within the list of health articles
                 JSONObject currentHealth = healthArray.getJSONObject(i);
 
-                // Extract the value for the key called "type"
-                String type = currentHealth.getString("type");
+                // Extract the value for the key called "sectionName"
+                String sectionName = currentHealth.getString("sectionName");
 
                 // Extract the value for the key called "webTitle"
                 String webTitle = currentHealth.getString("webTitle");
+
+                // Extract the value for the key called "webAuthor"
+                String webAuthor = null;
+                if (currentHealth.has("tags")) {
+                    // Extract the JSONArray associated with the key called "tags"
+                    JSONArray tagsArray = currentHealth.getJSONArray("tags");
+                    if (tagsArray.length() != 0) {
+                        // Extract the first JSONObject in the tagsArray
+                        JSONObject firstTagsItem = tagsArray.getJSONObject(0);
+                        // Extract the value for the key called "webTitle"
+                        webAuthor = firstTagsItem.getString("webTitle");
+                    }
+                }
 
                 // Extract the value for the key called "webPublicationDate"
                 String webPublicationDate = currentHealth.getString("webPublicationDate");
@@ -174,9 +187,9 @@ public final class QueryUtils {
                 // Extract the value for the key called "webUrl"
                 String webUrl = currentHealth.getString("webUrl");
 
-                // Create a new {@link Health} object with the type, title, date,
+                // Create a new {@link Health} object with the section name, title, author, date,
                 // and url from the JSON response.
-                Health healthnews = new Health(type, webTitle, webPublicationDate, webUrl);
+                Health healthnews = new Health(sectionName, webTitle, webAuthor, webPublicationDate, webUrl);
 
                 // Add the new {@link Health} to the list of health articles.
                 healtharticles.add(healthnews);

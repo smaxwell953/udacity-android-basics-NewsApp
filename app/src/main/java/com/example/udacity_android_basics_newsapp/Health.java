@@ -2,11 +2,14 @@ package com.example.udacity_android_basics_newsapp;
 
 public class Health  {
 
-    /** Type of the article */
-    private String type;
+    /** Section name of the article */
+    private String sectionName;
 
     /** Title of the article */
     private String webTitle;
+
+    /** Author of the article */
+    private String webAuthor;
 
     /** Date of the article */
     private String webPublicationDate;
@@ -14,18 +17,19 @@ public class Health  {
     /** URL of the article */
     private String webUrl;
 
-    public Health(String type, String webTitle, String webPublicationDate, String webUrl) {
-        this.type = type;
+    public Health(String sectionName, String webTitle, String webAuthor, String webPublicationDate, String webUrl) {
+        this.sectionName = sectionName;
         this.webTitle = webTitle;
+        this.webAuthor = webAuthor;
         this.webPublicationDate = webPublicationDate;
         this.webUrl = webUrl;
     }
 
     /**
-     * Returns the type of the article.
+     * Returns the section name of the article.
      */
-    public String getType() {
-        return type;
+    public String getsectionName() {
+        return sectionName;
     }
 
     /**
@@ -33,6 +37,13 @@ public class Health  {
      */
     public String getTitle() {
         return webTitle;
+    }
+
+    /**
+     * Returns the author of the article.
+     */
+    public String getwebAuthor() {
+        return webAuthor;
     }
 
     /**
@@ -52,8 +63,9 @@ public class Health  {
     @Override
     public String toString() {
         return "News{" +
-                "type='" + type + '\'' +
+                "sectionName='" + sectionName + '\'' +
                 ", title='" + webTitle + '\'' +
+                ", webAuthor='" + webAuthor + '\'' +
                 ", date='" + webPublicationDate + '\'' +
                 ", url='" + webUrl + '\'' +
                 '}';

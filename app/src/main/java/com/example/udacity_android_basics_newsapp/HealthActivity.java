@@ -168,6 +168,7 @@ public class HealthActivity extends AppCompatActivity
 
         uriBuilder.appendQueryParameter("format", "json");
         uriBuilder.appendQueryParameter("limit", "10");
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("minmag", minDate);
         uriBuilder.appendQueryParameter("orderby", orderBy);
 
