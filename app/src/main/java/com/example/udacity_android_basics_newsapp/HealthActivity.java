@@ -42,12 +42,15 @@ public class HealthActivity extends AppCompatActivity
     private static final int CONNECT_TIME_OUT = 15000; // milliseconds
     private static final int RESPONSE_CODE_SUCCESS = 200;
 
-    // API KEY that I have to register to get access to the guardian API but must keep private
+    // API KEY
     private static final String API_KEY = "test";
 
     /** URL for health article data from the Guardian dataset */
     private static final String GUARDIAN_REQUEST_URL =
             "https://content.guardianapis.com/search?q=health&api-key="+API_KEY;
+
+    /** URL for health section */
+    private static final String GUARDIANS_HEALTH_URL = "https://www.theguardian.com/lifeandstyle/health-and-wellbeing";
 
     /**
      * Constant value for the health loader ID. We can choose any integer.
@@ -93,6 +96,17 @@ public class HealthActivity extends AppCompatActivity
                 // Find the current health article that was clicked on
                 Health currentHealth = mAdapter.getItem(position);
 
+                if (currentHealth != null) {
+                    String webUrl = currentHealth.getUrl();
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW);
+                    if(webUrl != null){
+                        webIntent.setData(Uri.parse(webUrl));
+                    }else{
+                        webIntent.setData(Uri.parse(GUARDIANS_HEALTH_URL));
+                    }
+                    startActivity(webIntent);
+                }
+
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
                 Uri healthUri = Uri.parse(currentHealth.getUrl());
 
@@ -109,7 +123,10 @@ public class HealthActivity extends AppCompatActivity
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -128,13 +145,14 @@ public class HealthActivity extends AppCompatActivity
 
             // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
+            mEmptyStateTextView.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         if (key.equals(getString(R.string.settings_min_date_key)) ||
-                key.equals(getString(R.string.settings_order_by_key))){
+                key.equals(getString(R.string.settings_order_by_key))) {
             // Clear the ListView as a new query will be kicked off
             mAdapter.clear();
 
@@ -185,13 +203,12 @@ public class HealthActivity extends AppCompatActivity
         mEmptyStateTextView.setText(R.string.no_healtharticles);
 
         // Clear the adapter of previous health article data
-        //mAdapter.clear();
+        mAdapter.clear();
 
         // If there is a valid list of {@link Health Article}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (healtharticles != null && !healtharticles.isEmpty()) {
             mAdapter.addAll(healtharticles);
-            //updateUi(healtharticles);
         }
     }
 

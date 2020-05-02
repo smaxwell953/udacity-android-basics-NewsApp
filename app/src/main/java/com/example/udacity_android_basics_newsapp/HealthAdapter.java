@@ -38,8 +38,13 @@ public class HealthAdapter extends ArrayAdapter<Health> {
         TextView title = convertView.findViewById(R.id.title);
         title.setText(health.getTitle());
 
+        // If the author does not exist, hide the webAuthor TextView
         TextView webAuthor = convertView.findViewById(R.id.author);
-        webAuthor.setText(health.getwebAuthor());
+        if (health.getwebAuthor() == null) {
+            webAuthor.setVisibility(View.GONE);
+        } else {
+            webAuthor.setText(health.getwebAuthor());
+        }
 
         TextView date = convertView.findViewById(R.id.date);
         date.setText(changeDateToDays(health.getDate()));
