@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -96,19 +95,9 @@ public class HealthActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current health article that was clicked on
                 Health currentHealth = mAdapter.getItem(position);
-
-                if (currentHealth != null) {
-                    String webUrl = currentHealth.getUrl();
-                    Intent webIntent = new Intent(Intent.ACTION_VIEW);
-                    if(webUrl != null){
-                        webIntent.setData(Uri.parse(webUrl));
-                    }else{
-                        webIntent.setData(Uri.parse(GUARDIANS_HEALTH_URL));
-                    }
-                    startActivity(webIntent);
-                }
-
+                
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
+                assert currentHealth != null;
                 Uri healthUri = Uri.parse(currentHealth.getUrl());
 
                 // Create a new intent to view the health article URI
@@ -201,28 +190,27 @@ public class HealthActivity extends AppCompatActivity
 
         // Update empty state with no connection error message
         mEmptyStateTextView.setText(R.string.no_internet_connection);
-        mEmptyStateTextView.setVisibility(View.VISIBLE);
-
-        getLoaderManager().destroyLoader(HEALTH_LOADER_ID);
 
         // If there is a valid list of {@link Health Article}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (healtharticles != null && !healtharticles.isEmpty()) {
             mAdapter.addAll(healtharticles);
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(LOG_TAG, "onResume");
     }
 
     @Override
     public void onLoaderReset(Loader<List<Health>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.clear();
+        // Update empty state with no connection error message
+        mEmptyStateTextView.setText(R.string.no_internet_connection);
+        mEmptyStateTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
