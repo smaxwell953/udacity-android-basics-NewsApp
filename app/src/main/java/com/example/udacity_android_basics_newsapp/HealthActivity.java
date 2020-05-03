@@ -238,6 +238,12 @@ public class HealthActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TAG, "onResume");
+    }
+
+    @Override
     public void onLoaderReset(Loader<List<Health>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
