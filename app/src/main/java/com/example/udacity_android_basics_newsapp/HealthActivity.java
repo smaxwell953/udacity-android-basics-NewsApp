@@ -95,19 +95,9 @@ public class HealthActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current health article that was clicked on
                 Health currentHealth = mAdapter.getItem(position);
-
-                if (currentHealth != null) {
-                    String webUrl = currentHealth.getUrl();
-                    Intent webIntent = new Intent(Intent.ACTION_VIEW);
-                    if(webUrl != null){
-                        webIntent.setData(Uri.parse(webUrl));
-                    }else{
-                        webIntent.setData(Uri.parse(GUARDIANS_HEALTH_URL));
-                    }
-                    startActivity(webIntent);
-                }
-
+                
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
+                assert currentHealth != null;
                 Uri healthUri = Uri.parse(currentHealth.getUrl());
 
                 // Create a new intent to view the health article URI
@@ -195,15 +185,11 @@ public class HealthActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(android.content.Loader<List<Health>> loader, List<Health> healtharticles) {
-        // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No health articles found."
-        mEmptyStateTextView.setText(R.string.no_healtharticles);
-
-        // Clear the adapter of previous health article data
-        mAdapter.clear();
+        // Update empty state with no connection error message
+        mEmptyStateTextView.setText(R.string.no_internet_connection);
 
         // If there is a valid list of {@link Health Article}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
@@ -216,6 +202,15 @@ public class HealthActivity extends AppCompatActivity
     public void onLoaderReset(Loader<List<Health>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.clear();
+        // Update empty state with no connection error message
+        mEmptyStateTextView.setText(R.string.no_internet_connection);
+        mEmptyStateTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
