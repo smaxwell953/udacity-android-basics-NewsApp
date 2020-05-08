@@ -19,5 +19,5 @@ This project is about combining various ideas and skills we’ve been practicing
 This project will require use of the <a href="http://open-platform.theguardian.com/documentation/">Guardian API</a>, which is well-maintained and returns information in a JSON format.
 
 <h2>Final Output - Screenshots</h2>
-<table><tr><td><img src="https://user-images.githubusercontent.com/34871894/81359184-ab7f6080-9095-11ea-80fb-2f17a7ecc8ac.jpg" width="350"></td><td><img src="https://user-images.githubusercontent.com/34871894/81359187-ac17f700-9095-11ea-8df7-dfa638de3a71.jpg" width="350"></td></tr>
-<tr><td><img src="https://user-images.githubusercontent.com/34871894/81359189-acb08d80-9095-11ea-8f2a-e71cf91632d1.jpg" width="350"></td></tr></table>
+<table><tr><td><img src="https://user-images.githubusercontent.com/34871894/81360349-d4edbb80-9098-11ea-85dc-f917220c13f9.jpg" width="350"></td><td><img src="https://user-images.githubusercontent.com/34871894/81360351-d5865200-9098-11ea-9811-495ec31fea66.jpg" width="350"></td></tr>
+<tr><td><img src="https://user-images.githubusercontent.com/34871894/81360352-d61ee880-9098-11ea-99a8-6ef2ccb3af71.jpg" width="350"></td></tr></table>
