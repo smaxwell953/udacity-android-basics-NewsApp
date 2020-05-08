@@ -1,4 +1,4 @@
-# udacity-android-basics-NewsApp
+<h2>NewsApp</h2>
 This app is part of the Udacity Android Basics Nanodegree Program.
 
 <h2>Project Overview</h2>
